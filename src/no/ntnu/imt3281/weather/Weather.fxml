@@ -13,7 +13,6 @@
             <Label text="Klikk i kartet for værmelding" BorderPane.alignment="CENTER" />
          </top>
          <bottom>
-            <Label fx:id="harMannenFalt" text="Label" BorderPane.alignment="CENTER" />
          </bottom>
          <center>
             <WebView fx:id="forecast" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
