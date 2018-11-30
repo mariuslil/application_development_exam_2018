@@ -20,7 +20,7 @@ public class TestPlace {
 	@Test
 	public void testConstructorAndGetters() {
 		String data = "101	Asak kirke	55	Kyrkje	Kirke	Church	Halden	Østfold	59.14465	11.45458		http://www.yr.no/stad/Noreg/Østfold/Halden/Asak_kirke/varsel.xml	http://www.yr.no/sted/Norge/	";
-		Place p = new Place(Arrays.asList(data.split("\t")));
+		Place p = new Place(Arrays.asList(data.split("\t")));	// Constructor expects a List of String as parameter
 		assertEquals(101, p.getKommunenr());
 		assertEquals("Asak kirke", p.getStedsnavn());
 		assertEquals("Kirke", p.getStedstype());
