@@ -64,7 +64,7 @@ public class Database {
     }
 
     public void addPlace(Place p) {
-        try(Connection connect = DriverManager.getConnection("jdbc:derby:yrDB")) {
+        try(Connection connect = DriverManager.getConnection(DBURL)) {
             String sql = "INSERT INTO PLACES (Kommunenr, StedsNavn, StedsType, Kommune, Fylke, Latitude, Longitude, URL) VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement stmnt = connect.prepareStatement(sql);
             stmnt.setInt(1, p.getKommunenr());
@@ -82,6 +82,20 @@ public class Database {
     }
 
     public Place findPlace (float lng, float lat) {
+        try(Connection connect = DriverManager.getConnection(DBURL)) {
+
+            Statement stmnt = connect.createStatement();
+            String sql = "SELECT TOP 1 * FROM PLACES "+
+                         "WHERE Latitude";
+            ResultSet rs = stmnt.executeQuery(sql);
+            stmnt.close();
+
+
+
+        } catch (SQLException e) {
+            System.out.println("DATABASE: ERROR");
+        }
+
         return null;
     }
 

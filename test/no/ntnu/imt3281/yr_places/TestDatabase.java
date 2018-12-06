@@ -4,10 +4,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 public class TestDatabase {
 
@@ -40,7 +38,13 @@ public class TestDatabase {
             assertEquals("http://www.yr.no/stad/Noreg/Nordland/Narvik/Ankenes~283165/varsel.xml", rs.getString("URL"));
 
         } catch (SQLException e) {
-            
+            System.out.println("DATABASE: ERROR");
         }
     }
+
+    @Test
+    public void testFindPlace(){
+
+    }
+
 }
