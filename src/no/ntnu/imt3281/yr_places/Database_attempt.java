@@ -11,10 +11,11 @@ public class Database_attempt {
     private static Database database;
     private static String DBURL;
 
+    /*
     private Database(){
         connectDB();
     }
-
+*/
     /**
      * Gets the on disk database
      * @return
@@ -22,7 +23,7 @@ public class Database_attempt {
     public static Database getDB() {
         DBURL = "jdbc:derby:yrDB";
         if (database == null) {
-            database = new Database();
+            //database = new Database();
         }
         return database;
     }
@@ -34,7 +35,7 @@ public class Database_attempt {
     public static Database getDBTest() {
         DBURL = "jdbc:derby:memory:yrDB";
         if (database == null) {
-            database = new Database();
+            //database = new Database();
         }
         return database;
     }

@@ -17,10 +17,12 @@ public class WeatherController {
     @FXML
     private WebView forecast;
 
-    public WeatherController() throws IOException {
+    public WeatherController(){
+        /*
         URL url = new URL("http://folk.ntnu.no/oeivindk/imt3281/map/");
         URLConnection conn = url.openConnection();
         InputStream in = conn.getInputStream();
+        */
 
     }
 
@@ -30,6 +32,6 @@ public class WeatherController {
     }
 
     public void getForecast(javafx.scene.input.MouseEvent mouseEvent) {
-        
+
     }
 }
