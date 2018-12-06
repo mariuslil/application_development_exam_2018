@@ -1,13 +1,12 @@
 package no.ntnu.imt3281.weather;
 
 import javafx.fxml.FXML;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import no.ntnu.imt3281.yr_places.DataStore;
+import no.ntnu.imt3281.yr_places.Place;
 
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
+import java.sql.SQLException;
 
 public class WeatherController {
 
@@ -18,20 +17,23 @@ public class WeatherController {
     private WebView forecast;
 
     public WeatherController(){
-        /*
-        URL url = new URL("http://folk.ntnu.no/oeivindk/imt3281/map/");
-        URLConnection conn = url.openConnection();
-        InputStream in = conn.getInputStream();
-        */
-
+       WebEngine engine = map.getEngine();
+       engine.load("http://folk.ntnu.no/oeivindk/imt3281/map/");
+       engine.setOnAlert(Event -> getForecast(Event.getData()));
     }
 
-    @FXML
-    void getForecast(MouseEvent event) {
+    public void getForecast(String location) {
+        Place p = null;
+        String[] coor =  location.split("\t");
+        double lat = Double.parseDouble(coor[0]);
+        double lng = Double.parseDouble(coor[1]);
+        try {
+            p = DataStore.getDataStore().getClosestPlace(lat,lng);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-    }
-
-    public void getForecast(javafx.scene.input.MouseEvent mouseEvent) {
+        System.out.println("StedsNavn: " + p.getStedsnavn() + " Kommune: " + p.getKommune());
 
     }
 }
