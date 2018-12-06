@@ -1,6 +1,8 @@
 package no.ntnu.imt3281.yr_places;
 
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class Place {
@@ -10,8 +12,8 @@ public class Place {
     private String stedsType;
     private String kommune;
     private String fylke;
-    private float lat;
-    private float lng;
+    private double lat;
+    private double lng;
     private String varselURL;
 
     /**
@@ -35,6 +37,17 @@ public class Place {
             this.varselURL = data.get(12).toString();
         }
 
+    }
+
+    public Place(ResultSet res) throws SQLException {
+        kommunenr = res.getInt(1);
+        stedsnavn = res.getString(2);
+        stedsType = res.getString(3);
+        kommune = res.getString(4);
+        fylke = res.getString(5);
+        lat = res.getDouble(6);
+        lng = res.getDouble(7);
+        varselURL = res.getString(8);
     }
 
     /**
@@ -81,7 +94,7 @@ public class Place {
      * Returns the latitude of the place.
      * @return
      */
-    public float getLat(){
+    public double getLat(){
         return lat;
     }
 
@@ -89,7 +102,7 @@ public class Place {
      * Returns the longitude of the place.
      * @return
      */
-    public float getLng(){
+    public double getLng(){
         return lng;
     }
 

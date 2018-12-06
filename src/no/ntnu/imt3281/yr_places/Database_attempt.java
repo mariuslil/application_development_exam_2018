@@ -1,9 +1,12 @@
+
 package no.ntnu.imt3281.yr_places;
+
+import org.apache.derby.database.Database;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class Database {
+public class Database_attempt {
 
     private static Database database;
     private static String DBURL;
@@ -12,6 +15,10 @@ public class Database {
         connectDB();
     }
 
+    /**
+     * Gets the on disk database
+     * @return
+     */
     public static Database getDB() {
         DBURL = "jdbc:derby:yrDB";
         if (database == null) {
@@ -20,6 +27,10 @@ public class Database {
         return database;
     }
 
+    /**
+     * Gets the memmory only database
+     * @return
+     */
     public static Database getDBTest() {
         DBURL = "jdbc:derby:memory:yrDB";
         if (database == null) {
@@ -63,6 +74,11 @@ public class Database {
         }
     }
 
+    /**
+     * Inserts a place into the database
+     * @param p
+     * @return
+     */
     public int addPlace(Place p) {
         try(Connection connect = DriverManager.getConnection(DBURL)) {
             String sql = "INSERT INTO PLACES (Kommunenr, StedsNavn, StedsType, Kommune, Fylke, Latitude, Longitude, URL) VALUES (?,?,?,?,?,?,?,?)";
@@ -85,6 +101,12 @@ public class Database {
         }
     }
 
+    /**
+     * Finds the place that is closest to the coordinates
+     * @param lng
+     * @param lat
+     * @return
+     */
     public Place findPlace (double lng, double lat) {
         try(Connection connect = DriverManager.getConnection(DBURL)) {
             ArrayList<String> p = new ArrayList<>();
