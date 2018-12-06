@@ -35,5 +35,7 @@ public class WeatherController {
 
         System.out.println("StedsNavn: " + p.getStedsnavn() + " Kommune: " + p.getKommune());
 
+        Forecast.getForecast(p.getVarselURL());
+
     }
 }
