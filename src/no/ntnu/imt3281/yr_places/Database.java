@@ -89,7 +89,9 @@ public class Database {
         try(Connection connect = DriverManager.getConnection(DBURL)) {
             ArrayList<String> p = new ArrayList<>();
             Statement stmnt = connect.createStatement();
-            String sql = "";
+            String sql = "Select 1 * From PLACES" +
+                         "WHERE SQRT(((Longitude - "+lng+")*(Longitude - "+lng+"))+(Latitude - "+lat+")*(Latitude - "+lat+"))" +
+                         "ORDER BY ABS";
             ResultSet rs = stmnt.executeQuery(sql);
             stmnt.close();
             int i = 0;
