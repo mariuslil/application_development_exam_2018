@@ -36,6 +36,7 @@ public class WeatherController {
         String[] coor =  location.split("\t");
         double lat = Double.parseDouble(coor[0]);
         double lng = Double.parseDouble(coor[1]);
+        System.out.println(lat + " " + lng );
         try {
             p = DataStore.getDataStore().getClosestPlace(lat,lng);
         } catch (SQLException e) {
