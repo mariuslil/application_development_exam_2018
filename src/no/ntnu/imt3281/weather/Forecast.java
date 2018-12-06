@@ -48,6 +48,13 @@ public class Forecast {
                 body.add(bodies.item(i).getNodeValue());
             }
 
+            for (int i = 0; i <titles.getLength(); i++) {
+                forecast.add(title.get(i));
+                forecast.add(body.get(i));
+            }
+
+            return forecast;
+
 
         } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException e) {
 
