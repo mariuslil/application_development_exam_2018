@@ -14,6 +14,10 @@ public class Place {
     private float lng;
     private String varselURL;
 
+    /**
+     * Constructor setting all the data for a place.
+     * @param data
+     */
     public Place(List data) {
         this.kommunenr = Integer.parseInt(data.get(0).toString());
         this.stedsnavn = data.get(1).toString();
@@ -24,7 +28,7 @@ public class Place {
         this.lng = Float.parseFloat(data.get(9).toString());
         String[] tmp;
         tmp = data.get(12).toString().split("/");
-        if (tmp.length < 6){
+        if (tmp.length < 6){            //incase the bokmaal URL is invalid
             this.varselURL = data.get(11).toString();
         }
         else {
@@ -33,34 +37,66 @@ public class Place {
 
     }
 
+    /**
+     * Returns the kommuneNr.
+     * @return
+     */
     public int getKommunenr(){
         return kommunenr;
     }
 
+    /**
+     * Returns the place name.
+     * @return
+     */
     public String getStedsnavn(){
         return stedsnavn;
     }
 
+    /**
+     * Returns the place type.
+     * @return
+     */
     public String getStedstype(){
         return stedsType;
     }
 
+    /**
+     * Returns the kommune the place is in.
+     * @return
+     */
     public String getKommune(){
         return kommune;
     }
 
+    /**
+     * Returns the fylke the place is in.
+     * @return
+     */
     public String getFylke(){
         return fylke;
     }
 
+    /**
+     * Returns the latitude of the place.
+     * @return
+     */
     public float getLat(){
         return lat;
     }
 
+    /**
+     * Returns the longitude of the place.
+     * @return
+     */
     public float getLng(){
         return lng;
     }
 
+    /**
+     * Returns the forecast URL for the place.
+     * @return
+     */
     public String getVarselURL(){
         return varselURL;
     }

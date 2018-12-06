@@ -7,18 +7,26 @@ import java.util.Scanner;
 
 public class AllThePlaces {
 
+    /**
+     * Gets all the locations from the URL and returns them as an list of lists of strings, that contains the info for each place.
+     * @return
+     * @throws IOException
+     */
     public static ArrayList<ArrayList<String>> getAllPlaces() throws IOException {
         ArrayList<ArrayList<String>> places = new ArrayList<ArrayList<String>>();
-        ArrayList<String> place = new ArrayList<>();
 
         URL url = new URL("http://fil.nrk.no/yr/viktigestader/noreg.txt");
         Scanner s = new Scanner(url.openStream());
 
-        int i = 0;
-        while (s.hasNextLine()) {
-            place.add(i, s.nextLine());
-            places.add(i, place);
-            i++;
+        String[] info;
+        s.nextLine(); //Throws away first line
+        while (s.hasNextLine()) { //Checks that notEOF
+            ArrayList<String> place = new ArrayList<>();
+            info = s.nextLine().split("\t");
+            for (String i : info) { //For each piece of info
+                place.add(i);
+            }
+            places.add(place);
         }
         return places;
     }
