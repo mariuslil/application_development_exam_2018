@@ -7,6 +7,7 @@ import no.ntnu.imt3281.yr_places.DataStore;
 import no.ntnu.imt3281.yr_places.Place;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class WeatherController {
 
@@ -40,9 +41,19 @@ public class WeatherController {
             e.printStackTrace();
         }
 
+        WebEngine engine = forecast.getEngine();
+
         System.out.println("StedsNavn: " + p.getStedsnavn() + " Kommune: " + p.getKommune());
 
-        Forecast.getForecast(p.getVarselURL());
+        //Gets the list with all the forecasts
+        ArrayList<String> weather = Forecast.getForecast(p.getVarselURL());
+
+        //Loads the page with all the forecast information
+        engine.loadContent("<h1>"+p.getStedsnavn()+" i "+p.getKommune()+"</h1>");
+        for (int i = 0; i < weather.size()/2 ; i+=2) {
+            engine.loadContent("<div><h3>"+weather.get(i)+"</h3><br><p>"+weather.get(i+1)+"</p></div>");
+        }
+
 
     }
 }

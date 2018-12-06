@@ -41,6 +41,7 @@ public class Forecast {
 
            NodeList titles = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
 
+            //Puts all titles in a list
            for(int i = 0; i < titles.getLength();i++) {
                title.add(titles.item(i).getNodeValue());
            }
@@ -49,10 +50,12 @@ public class Forecast {
 
             NodeList bodies = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
 
+            //puts all bodies in a list
             for(int i = 0; i < titles.getLength();i++) {
                 body.add(bodies.item(i).getNodeValue());
             }
 
+            //adds titles and bodies into the main list to be returned
             for (int i = 0; i <titles.getLength(); i++) {
                 forecast.add(title.get(i));
                 forecast.add(body.get(i));
