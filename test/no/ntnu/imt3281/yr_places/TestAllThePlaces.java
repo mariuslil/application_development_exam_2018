@@ -15,7 +15,7 @@ public class TestAllThePlaces {
      * @throws IOException
      */
     @Test
-    public void TestImport() throws IOException {
+    public void testImport() throws IOException {
         ArrayList<ArrayList<String>> p = new ArrayList<ArrayList<String>>();
         p = AllThePlaces.getAllPlaces();
         assertEquals("[1805, Ankenes, 55, Kyrkje, Kirke, Church, Narvik, Nordland, 68.42101, 17.37877, , http://www.yr.no/stad/Noreg/Nordland/Narvik/Ankenes~283165/varsel.xml, http://www.yr.no/sted/Norge/Nordland/Narvik/Ankenes~283165/varsel.xml, http://www.yr.no/place/Norway/Nordland/Narvik/Ankenes~283165/forecast.xml]" ,p.get(8197).toString());
