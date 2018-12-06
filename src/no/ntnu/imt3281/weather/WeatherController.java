@@ -16,12 +16,19 @@ public class WeatherController {
     @FXML
     private WebView forecast;
 
+    /**
+     * Loads the map in the GUI.
+     */
     public WeatherController(){
        WebEngine engine = map.getEngine();
        engine.load("http://folk.ntnu.no/oeivindk/imt3281/map/");
        engine.setOnAlert(Event -> getForecast(Event.getData()));
     }
 
+    /**
+     * Finds the closets location to the coordinates and calls the forecast function to get the forecast.
+     * @param location
+     */
     public void getForecast(String location) {
         Place p = null;
         String[] coor =  location.split("\t");

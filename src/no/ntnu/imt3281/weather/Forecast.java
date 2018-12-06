@@ -14,6 +14,11 @@ import java.util.List;
 
 public class Forecast {
 
+    /**
+     * Gets information aboaut a locations forecast from the provided url and returns it as a list.
+     * @param url
+     * @return
+     */
     public static ArrayList<String> getForecast(String url) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setNamespaceAware(true);
