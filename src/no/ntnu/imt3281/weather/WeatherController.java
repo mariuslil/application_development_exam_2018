@@ -20,9 +20,10 @@ public class WeatherController {
     /**
      * Loads the map in the GUI.
      */
-    public WeatherController(){
+    @FXML
+    public void initialize (){
        WebEngine engine = map.getEngine();
-       engine.load("http://folk.ntnu.no/oeivindk/imt3281/map/");
+       engine.load("http://folk.ntnu.no/oeivindk/imt3281/map/pseudoMap.html");
        engine.setOnAlert(Event -> getForecast(Event.getData()));
     }
 
@@ -42,6 +43,10 @@ public class WeatherController {
         }
 
         WebEngine engine = forecast.getEngine();
+
+        if (p == null) {
+            System.out.println("Oh crackers");
+        }
 
         System.out.println("StedsNavn: " + p.getStedsnavn() + " Kommune: " + p.getKommune());
 

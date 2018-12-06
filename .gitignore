@@ -6,3 +6,4 @@ target
 *.iml
 yrDB/
 derby.log
+placesDB/
