@@ -4,21 +4,41 @@ import java.sql.*;
 
 public class Database {
 
-    private Connection dbCon;
+    private static Database database;
+    private static String DBURL;
 
-    public Database(String c){
-        if (c =="T") {
-            this.dbCon = memDB();
+    private Database(){
+        connectDB();
+    }
+
+    public static Database getDB() {
+        DBURL = "jdbc:derby:yrDB";
+        if (database == null) {
+            database = new Database();
         }
-        else {
-            this.dbCon = connectDB();
+        return database;
+    }
+
+    public static Database getDBTest() {
+        DBURL = "jdbc:derby:memory:yrDB";
+        if (database == null) {
+            database = new Database();
+        }
+        return database;
+    }
+
+    private Connection connectDB(){
+        try(Connection connect = DriverManager.getConnection(DBURL)) {
+            System.out.println("DATABASE: Connected");
+            return connect;
+        } catch (SQLException e) {
+            System.out.println("DATABASE: Cannot connect, creating..");
+            return setupDB();
         }
     }
 
-    public Database getDB
-
-    private Connection memDB() {
-        try (Connection connect = DriverManager.getConnection("jdbc:derby:memory:yrDB;create=true")) {
+    private Connection setupDB(){
+        try(Connection connect = DriverManager.getConnection(DBURL + ";create=true")) {
             System.out.println("DATABASE: Created");
             String sql = "CREATE TABLE PLACES\n" +
                     "(Kommunenr INTEGER NOT NULL, \n" +
@@ -35,42 +55,10 @@ public class Database {
             stmnt.execute(sql);
             stmnt.close();
             System.out.println("DATABASE: Table created");
-            return connect;
-        } catch (SQLException e) {
-            System.out.println("DATABASE: ERROR Creating DB");
-            return null;
-        }
-    }
-
-    private Connection connectDB(){
-        try(Connection connect = DriverManager.getConnection("jdbc:derby:yrDB")) {
-            System.out.println("DATABASE: Connected");
-            return connect;
-        } catch (SQLException e) {
-            System.out.println("DATABASE: Cannot connect, creating..");
-            return setupDB();
-        }
-    }
-
-    private Connection setupDB(){
-        try(Connection connect = DriverManager.getConnection("jdbc:derby:yrDB;create=true")) {
-            System.out.println("DATABASE: Created");
-            String sql = "CREATE TABLE PLACES\n" +
-                    "(Kommunenr INTEGER NOT NULL, \n" +
-                    "StedsNavn VARCHAR(64) NOT NULL, \n" +
-                    "StedsType VARCHAR(64) NOT NULL, \n" +
-                    "Kommune VARCHAR(64) NOT NULL, \n" +
-                    "Fylke VARCHAR(64) NOT NULL, \n" +
-                    "Latitude FLOAT NOT NULL, \n" +
-                    "Longitude FLOAT NOT NULL, \n" +
-                    "URL VARCHAR(128) NOT NULL)";
-            Statement stmnt = connect.createStatement();
-            stmnt.execute(sql);
-            stmnt.close();
-            System.out.println("DATABASE: Table created");
 
             return connect;
         }catch (SQLException e) {
+            System.out.println("DATABASE: ERROR Creating DB");
             return null;
         }
     }

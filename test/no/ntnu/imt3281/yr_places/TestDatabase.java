@@ -3,17 +3,17 @@ package no.ntnu.imt3281.yr_places;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class TestDatabase {
 
     @Test
     public void testAddPlace(){
-        Database db = new Database("T");
+        Database db = Database.getDBTest();
         Place p = null;
         try {
            p = new Place(AllThePlaces.getAllPlaces().get(8197));
@@ -24,13 +24,23 @@ public class TestDatabase {
 
         try (Connection connect = DriverManager.getConnection("jdbc:derby:memory:yrDB")) {
             Statement stmnt = connect.createStatement();
-            String sql = "FROM PLACES SELECT StedsNavn" +
+            String sql = "SELECT StedsNavn FROM PLACES " +
                     "WHERE StedsNavn LIKE Ankenes AND Prioritet LIKE 55";
-            String place = stmnt.execute(sql);
+            ResultSet rs = stmnt.executeQuery(sql);
             stmnt.close();
 
-        } catch (SQLException e) {
+            assertEquals(1805,rs.getString("Kommunenr"));
+            assertEquals("Ankenes", rs.getString("StedsNavn"));
+            assertEquals("55", rs.getString("Prioritet"));
+            assertEquals("Kirke", rs.getString("StedsType"));
+            assertEquals("Narvik", rs.getString("Kommune"));
+            assertEquals("Nordland", rs.getString("Fylke"));
+            assertEquals(68.42101, rs.getString("Latitude"));
+            assertEquals(17.37877, rs.getString("Longitude"));
+            assertEquals("http://www.yr.no/stad/Noreg/Nordland/Narvik/Ankenes~283165/varsel.xml", rs.getString("URL"));
 
+        } catch (SQLException e) {
+            
         }
     }
 }
