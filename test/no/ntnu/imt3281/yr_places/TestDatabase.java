@@ -18,33 +18,14 @@ public class TestDatabase {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        db.addPlace(p);
-
-        try (Connection connect = DriverManager.getConnection("jdbc:derby:memory:yrDB")) {
-            Statement stmnt = connect.createStatement();
-            String sql = "SELECT StedsNavn FROM PLACES " +
-                    "WHERE StedsNavn LIKE Ankenes AND Prioritet LIKE 55";
-            ResultSet rs = stmnt.executeQuery(sql);
-            stmnt.close();
-
-            assertEquals(1805,rs.getString("Kommunenr"));
-            assertEquals("Ankenes", rs.getString("StedsNavn"));
-            assertEquals("55", rs.getString("Prioritet"));
-            assertEquals("Kirke", rs.getString("StedsType"));
-            assertEquals("Narvik", rs.getString("Kommune"));
-            assertEquals("Nordland", rs.getString("Fylke"));
-            assertEquals(68.42101, rs.getString("Latitude"));
-            assertEquals(17.37877, rs.getString("Longitude"));
-            assertEquals("http://www.yr.no/stad/Noreg/Nordland/Narvik/Ankenes~283165/varsel.xml", rs.getString("URL"));
-
-        } catch (SQLException e) {
-            System.out.println("DATABASE: ERROR");
-        }
+        assertEquals(1, db.addPlace(p));
     }
 
     @Test
     public void testFindPlace(){
-
+        Database db = Database.getDBTest();
+        Place p = db.findPlace(17.37, 68.42);
+        assertEquals("[1805, Ankenes, 55, Kyrkje, Kirke, Church, Narvik, Nordland, 68.42101, 17.37877, , http://www.yr.no/stad/Noreg/Nordland/Narvik/Ankenes~283165/varsel.xml, http://www.yr.no/sted/Norge/Nordland/Narvik/Ankenes~283165/varsel.xml, http://www.yr.no/place/Norway/Nordland/Narvik/Ankenes~283165/forecast.xml]" ,p.toString());
     }
 
 }

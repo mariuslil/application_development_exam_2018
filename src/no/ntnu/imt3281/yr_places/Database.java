@@ -1,6 +1,7 @@
 package no.ntnu.imt3281.yr_places;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Database {
 
@@ -49,21 +50,20 @@ public class Database {
                     "Fylke VARCHAR(64) NOT NULL, \n" +
                     "Latitude FLOAT NOT NULL, \n" +
                     "Longitude FLOAT NOT NULL, \n" +
-                    "URL VARCHAR(128) NOT NULL, \n" +
-                    "CONSTRAINT PK_Place PRIMARY KEY(StedsNavn, Prioritet)";
+                    "URL VARCHAR(128) NOT NULL)";
             Statement stmnt = connect.createStatement();
             stmnt.execute(sql);
             stmnt.close();
             System.out.println("DATABASE: Table created");
-
             return connect;
         }catch (SQLException e) {
             System.out.println("DATABASE: ERROR Creating DB");
+            e.printStackTrace();
             return null;
         }
     }
 
-    public void addPlace(Place p) {
+    public int addPlace(Place p) {
         try(Connection connect = DriverManager.getConnection(DBURL)) {
             String sql = "INSERT INTO PLACES (Kommunenr, StedsNavn, StedsType, Kommune, Fylke, Latitude, Longitude, URL) VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement stmnt = connect.prepareStatement(sql);
@@ -72,25 +72,35 @@ public class Database {
             stmnt.setString(3, p.getStedstype());
             stmnt.setString(4, p.getKommune());
             stmnt.setString(5, p.getFylke());
-            stmnt.setFloat(6, p.getLat());
-            stmnt.setFloat(7, p.getLng());
+            stmnt.setDouble(6, p.getLat());
+            stmnt.setDouble(7, p.getLng());
             stmnt.setString(8, p.getVarselURL());
+
+            int rows = stmnt.executeUpdate();
+            return rows;
 
         } catch (SQLException e) {
             System.out.println("DATABASE: ERROR no connection");
+            return 0;
         }
     }
 
-    public Place findPlace (float lng, float lat) {
+    public Place findPlace (double lng, double lat) {
         try(Connection connect = DriverManager.getConnection(DBURL)) {
-
+            ArrayList<String> p = new ArrayList<>();
             Statement stmnt = connect.createStatement();
-            String sql = "SELECT TOP 1 * FROM PLACES "+
-                         "WHERE Latitude";
+            String sql = "";
             ResultSet rs = stmnt.executeQuery(sql);
             stmnt.close();
+            int i = 0;
+            while(rs.next()) {
+                p.add(rs.getString(i));
+                i++;
+            }
 
+            Place place = new Place(p);
 
+            return place;
 
         } catch (SQLException e) {
             System.out.println("DATABASE: ERROR");
