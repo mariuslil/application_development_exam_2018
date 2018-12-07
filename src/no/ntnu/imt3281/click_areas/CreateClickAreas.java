@@ -9,9 +9,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import javafx.scene.shape.Polygon;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
+import javax.swing.plaf.FileChooserUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import static javafx.scene.paint.Color.*;
 
@@ -82,6 +89,20 @@ public class CreateClickAreas {
      * @param actionEvent
      */
     public void toFile(javafx.event.ActionEvent actionEvent) {
+        Stage primaryStage = new Stage();
+        FileChooser chooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON files (*.json", "*.json");
+        chooser.getExtensionFilters().add(extFilter);
+
+        File file = chooser.showSaveDialog(primaryStage);
+
+        try {
+            FileWriter writer = new FileWriter(file);
+            writer.write(areas.getText());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
