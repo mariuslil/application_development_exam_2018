@@ -85,7 +85,7 @@ public class CreateClickAreas {
     }
 
     /**
-     *
+     *Saves a JSON formated file to disk
      * @param actionEvent
      */
     public void toFile(javafx.event.ActionEvent actionEvent) {
