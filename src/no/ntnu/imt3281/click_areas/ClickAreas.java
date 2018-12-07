@@ -19,7 +19,7 @@ public class ClickAreas {
     List names = new ArrayList<String>();
 
     public void initialize() {
-        
+
     }
 
     @FXML
@@ -33,6 +33,10 @@ public class ClickAreas {
 
     }
 
+    /**
+     * Check to se if the user has clicked any of the shapes in the json file.
+     * @param mouseEvent
+     */
     public void clicked(javafx.scene.input.MouseEvent mouseEvent) {
         Point click = new Point(mouseEvent.getX(), mouseEvent.getY());
         JSONParser parser = new JSONParser();
