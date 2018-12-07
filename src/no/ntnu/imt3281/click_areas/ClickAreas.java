@@ -18,25 +18,37 @@ import java.util.List;
 
 public class ClickAreas {
     List shapes = new ArrayList<Polygon>();
+    List names = new ArrayList<String>();
 
     public void initialize() {
         JSONParser parser = new JSONParser();
 
         try {
             Object obj = parser.parse(new FileReader("former.json"));
+            List points = new ArrayList<ArrayList<Double>>();
 
-            List points = new ArrayList<String>();
-
+            JSONObject jsonObject;
             JSONArray jsonArray = (JSONArray) obj;
-            //points.add(jsonArray);
-            //System.out.println(points.get(1));
 
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("Shapes", jsonArray);
-            points.add(jsonObject);
 
-            //System.out.println(jsonArray.get(1));
-            System.out.println(jsonObject);
+            for(int i = 0; i < jsonArray.size();i++) {
+                List coor = new ArrayList<Double>();
+                jsonObject = (JSONObject) jsonArray.get(i);
+                names.add(jsonObject.get("name"));
+                JSONArray poly = (JSONArray) jsonObject.get("polygon");
+                for (int j = 0; j < poly.size();j++) {
+                    JSONObject point = (JSONObject) poly.get(j);
+                    coor.add(point.get("x"));
+                    coor.add(point.get("y"));
+                }
+                points.add(coor);
+            }
+
+            Double[] xy = null;
+            for(int i = 0; i < points.size();i++) {
+                xy[i] = Double.parseDouble(points.get(i).toString());
+                System.out.println(xy);
+            }
 
 
         } catch (ParseException | IOException e) {
