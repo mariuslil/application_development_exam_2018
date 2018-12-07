@@ -20,10 +20,11 @@ public class ManDown extends javafx.scene.control.Label {
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
             boolean found = false;
             while (in.readLine() != "") {
+                System.out.println(in.readLine());
                 if (found) {
                     return in.readLine();
                 }
-                if (in.readLine().contains()) {
+                if (in.readLine().contains("<div id=\"yesnomaybe\">")) {
                     found = true;
                 }
             }
