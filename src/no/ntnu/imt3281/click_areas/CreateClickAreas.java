@@ -53,21 +53,44 @@ public class CreateClickAreas {
 
     }
 
+    /**
+     * adds the info about the shape into the textArea in JSON format.
+     * @param actionEvent
+     */
     public void addArea(javafx.event.ActionEvent actionEvent) {
-        shape.getPoints().size();
-        areas.insertText(areas.getLength()-1,"{\n\"name\": \""+areaName.getText()+"\",\n" +
-                "\"polygon\": [\n" +
-                "" +
-                "]\n" +
-                "},");
+        String text ="";
+        if (areas.getLength() > 2) { //If not first
+            text = ", ";
+        }
+        text = text + "{\n\t\"name\": \""+areaName.getText()+"\",\n" +
+                "\t\"polygon\": [\n";
+        for(int i = 0; i < shape.getPoints().size();i+=2) { //Gets all the points from the drawn shape
+            text = text + "\t\t{\"x\": "+shape.getPoints().get(i)+", " +
+                          "\"y\": "+shape.getPoints().get(i+1)+"},\n";
+        }
+        text = text + "\t]\n}";
+
+        //Insert between the [] brackets
+        areas.insertText(areas.getLength()-1,text);
+        //Clear the board
+        shape.getPoints().clear();
+        points.getItems().clear();
     }
 
+    /**
+     *
+     * @param actionEvent
+     */
     public void toFile(javafx.event.ActionEvent actionEvent) {
 
     }
 
+    /**
+     * Finds the position of the mousepointer and starts drawing a shape from it.
+     * @param mouseEvent
+     */
     public void findPos(javafx.scene.input.MouseEvent mouseEvent) {
-        points.getItems().add(mouseEvent.getSceneX()+" : "+mouseEvent.getSceneY());
+        points.getItems().add(mouseEvent.getX()+" : "+mouseEvent.getY());
 
         shape.getPoints().addAll(mouseEvent.getX(), mouseEvent.getY());
 
