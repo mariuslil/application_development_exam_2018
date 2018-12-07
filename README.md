@@ -1,0 +1,2 @@
+Hadde en ganske stor bugg de første 12 timene hvor jeg ikke klarte å kjøre noe javafx, så mye av oppgave 4,5,6 er gjort uten at jeg har for skikkelig testa javafx delen, men koden skal være ganske riktig.
+Jeg ba også om løsningsforslaget på oppgave 3, og der var det en feil hvor resoultset blir null, noe som gjør at jeg heller ikke fikk teste koden selv etter jeg fikset javafx feilen. jeg kunne såklart ha prøvd å fikse det, men etter å ha debugga en stund tenkt jeg det heller var viktigere å fokusere på resten av eksamen.
