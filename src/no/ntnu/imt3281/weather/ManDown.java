@@ -18,14 +18,10 @@ public class ManDown extends javafx.scene.control.Label {
         try {
             url = new URL("https://www.harmannenfalt.no/index.html");
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-            boolean found = false;
-            while (in.readLine() != "") {
+            for(int i = 1; i<=60;i++) {
                 System.out.println(in.readLine());
-                if (found) {
+                if (i == 59) {
                     return in.readLine();
-                }
-                if (in.readLine().contains("<div id=\"yesnomaybe\">")) {
-                    found = true;
                 }
             }
         } catch (IOException e) {
