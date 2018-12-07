@@ -10,50 +10,16 @@ import org.json.simple.parser.ParseException;
 
 
 import java.awt.event.MouseEvent;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClickAreas {
-    List shapes = new ArrayList<Polygon>();
     List names = new ArrayList<String>();
 
     public void initialize() {
-        JSONParser parser = new JSONParser();
-
-        try {
-            Object obj = parser.parse(new FileReader("former.json"));
-            List points = new ArrayList<ArrayList<Double>>();
-
-            JSONObject jsonObject;
-            JSONArray jsonArray = (JSONArray) obj;
-
-
-            for(int i = 0; i < jsonArray.size();i++) {
-                List coor = new ArrayList<Double>();
-                jsonObject = (JSONObject) jsonArray.get(i);
-                names.add(jsonObject.get("name"));
-                JSONArray poly = (JSONArray) jsonObject.get("polygon");
-                for (int j = 0; j < poly.size();j++) {
-                    JSONObject point = (JSONObject) poly.get(j);
-                    coor.add(point.get("x"));
-                    coor.add(point.get("y"));
-                }
-                points.add(coor);
-            }
-
-            Double[] xy = null;
-            for(int i = 0; i < points.size();i++) {
-                xy[i] = Double.parseDouble(points.get(i).toString());
-                System.out.println(xy);
-            }
-
-
-        } catch (ParseException | IOException e) {
-            e.printStackTrace();
-        }
+        
     }
 
     @FXML
@@ -68,6 +34,38 @@ public class ClickAreas {
     }
 
     public void clicked(javafx.scene.input.MouseEvent mouseEvent) {
+        Point click = new Point(mouseEvent.getX(), mouseEvent.getY());
+        JSONParser parser = new JSONParser();
+
+        try {
+            Object obj = parser.parse(new FileReader("former.json"));
+
+            JSONObject jsonObject;
+            JSONArray jsonArray = (JSONArray) obj;
+
+
+            for(int i = 0; i < jsonArray.size();i++) {
+                jsonObject = (JSONObject) jsonArray.get(i);
+
+                names.add(jsonObject.get("name"));
+
+                JSONArray poly = (JSONArray) jsonObject.get("polygon");
+
+                Point[] xy = new Point[poly.size()];
+
+                for (int j = 0; j < poly.size();j++) {
+                    JSONObject point = (JSONObject) poly.get(j);
+                    xy[j] = new Point(Double.parseDouble(point.get("x").toString()), Double.parseDouble(point.get("y").toString()));
+                }
+
+                if(new Polygon(xy).contains(click)) {
+                    System.out.println("DET VAR RIKTIG");
+                }
+            }
+
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }
