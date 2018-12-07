@@ -26,11 +26,11 @@ public class WeatherController {
      */
     @FXML
     public void initialize (){
-        ManDown mannen = new ManDown();
-        borderPane.setBottom(mannen);
        WebEngine engine = map.getEngine();
        engine.load("http://folk.ntnu.no/oeivindk/imt3281/map/pseudoMap.html");
        engine.setOnAlert(Event -> getForecast(Event.getData()));
+       ManDown mannen = new ManDown();
+       borderPane.setBottom(mannen);
     }
 
     /**
