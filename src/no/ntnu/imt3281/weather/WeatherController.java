@@ -1,6 +1,7 @@
 package no.ntnu.imt3281.weather;
 
 import javafx.fxml.FXML;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import no.ntnu.imt3281.yr_places.DataStore;
@@ -15,6 +16,9 @@ public class WeatherController {
     private WebView map;
 
     @FXML
+    private BorderPane borderPane;
+
+    @FXML
     private WebView forecast;
 
     /**
@@ -22,6 +26,8 @@ public class WeatherController {
      */
     @FXML
     public void initialize (){
+        ManDown mannen = new ManDown();
+        borderPane.setBottom(mannen);
        WebEngine engine = map.getEngine();
        engine.load("http://folk.ntnu.no/oeivindk/imt3281/map/pseudoMap.html");
        engine.setOnAlert(Event -> getForecast(Event.getData()));
